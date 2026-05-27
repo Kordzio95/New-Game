@@ -71,6 +71,12 @@ tekst_zadania = "Zadanie: porozmawiaj z Jakubem i Michałem"
 
 lokacja = "zewnatrz"
 
+czy_ma_klucz = False
+klucz_x = 240
+klucz_y = 120
+klucz_szerokosc = 20
+klucz_wysokosc = 20
+
 font = pygame.font.SysFont("arial", 24)
 zegar = pygame.time.Clock()
 
@@ -217,19 +223,55 @@ def rysuj_podpowiedz():
             prostokat_tekstu = tekst.get_rect(center=(szerokosc // 2, 470))
             okno.blit(tekst, prostokat_tekstu)
 
+
     elif lokacja == "dom":
-        srodek_x = gracz_x + gracz_szerokosc // 2
-        srodek_y = gracz_y + gracz_wysokosc // 2
 
-        kolumna = srodek_x // rozmiar_kafelka
-        wiersz = srodek_y // rozmiar_kafelka
+        if czy_gracz_jest_przy_kluczu():
 
-        if 0 <= wiersz < len(mapa_dom) and 0 <= kolumna < len(mapa_dom[wiersz]):
-            if mapa_dom[wiersz][kolumna] == "wyjscie":
+            czy_ma_klucz = True
+
+            tekst_dialogu = "Znalazles klucz!"
+
+            pokaz_dialog = True
+
+        else:
+
+            srodek_x = gracz_x + gracz_szerokosc // 2
+
+            srodek_y = gracz_y + gracz_wysokosc // 2
+
+            kolumna = srodek_x // rozmiar_kafelka
+
+            wiersz = srodek_y // rozmiar_kafelka
+
+            if 0 <= wiersz < len(mapa_dom) and 0 <= kolumna < len(mapa_dom[wiersz]):
+
+                if mapa_dom[wiersz][kolumna] == "wyjscie":
+                    lokacja = "zewnatrz"
+
+                    gracz_x = 480
+
+                    gracz_y = 360
+
+                    pokaz_dialog = False
                 tekst = font.render("Nacisnij E, aby wyjsc", True, czarny)
                 prostokat_tekstu = tekst.get_rect(center=(szerokosc // 2, 470))
                 okno.blit(tekst, prostokat_tekstu)
 
+def rysuj_klucz():
+    if lokacja == "dom" and not czy_ma_klucz:
+        pygame.draw.rect(okno, zolty, (klucz_x, klucz_y, klucz_szerokosc, klucz_wysokosc))
+
+def czy_gracz_jest_przy_kluczu():
+    if lokacja != "dom" or czy_ma_klucz:
+        return False
+
+    prostokat_gracza = pygame.Rect(gracz_x, gracz_y, gracz_szerokosc, gracz_wysokosc)
+    prostokat_klucza = pygame.Rect(klucz_x, klucz_y, klucz_szerokosc, klucz_wysokosc)
+
+    strefa_klucza = prostokat_klucza.inflate(20, 20)
+
+    return prostokat_gracza.colliderect(strefa_klucza)
 
 dziala = True
 while dziala:
@@ -304,6 +346,8 @@ while dziala:
 
         rysuj_imie("Jakub", jakub_x, jakub_y, jakub_szerokosc)
         rysuj_imie("Michał", michal_x, michal_y, michal_szerokosc)
+
+    rysuj_klucz()
 
     pygame.draw.rect(okno, czerwony, (gracz_x, gracz_y, gracz_szerokosc, gracz_wysokosc))
     rysuj_imie("Łukasz", gracz_x, gracz_y, gracz_szerokosc)
