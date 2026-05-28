@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cc00fdba-dfd8-4169-aa9a-87688bcbc6d0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/main_backup.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -52,6 +53,11 @@
     "to.speed.mode.migration.done": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\kordi\Szkolenia Python\Moja_gra" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
